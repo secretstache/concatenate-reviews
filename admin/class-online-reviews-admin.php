@@ -132,7 +132,7 @@ class Online_Reviews_Admin {
 			'show_in_menu'					=> TRUE,
 			'show_in_nav_menu' 				=> TRUE,
 			'show_ui' 						=> TRUE,
-			'supports' 						=> array( 'title' ),
+			'supports' 						=> array( 'title', 'editor' ),
 			'taxonomies' 					=> array(),
 			'show_in_rest' 					=> TRUE
 		);
@@ -211,23 +211,104 @@ class Online_Reviews_Admin {
 
 	}
 
+
 	/**
-	 * Add the function that takes care of adding new reviews as Online Reviews CPT
+	 * Get the list of hashes of already posted online_reviews.
+	 * @since   1.0.0
+	 */
+	function get_posted_reviews() {
+
+		$reviews = get_posts( array( 'numberposts' => -1, 'post_type' => 'online_reviews' ) );
+		$posted_reviews = array();
+
+		foreach ($reviews as $review) {
+			array_push($posted_reviews, get_post_meta( $review->ID, 'hash', true ) );
+		}
+			
+		return $posted_reviews;
+
+
+	}
+
+	function post_new_reviews( $type, $table, $wpdb, $posted_reviews ) {
+
+		$table_name = $wpdb->prefix . $table;
+		$reviews = array();
+
+		if ( $type == "google" ) {
+
+			$rows = $wpdb->get_results("select hash, rating, text, time, author_name, profile_photo_url from {$table_name}");
+
+			foreach ($rows as $obj) {
+				array_push( $reviews, array( 'hash' => $obj->hash, 'rating' => $obj->rating, 'text' => $obj->text, 'time' => $obj->time, 'author_name' => $obj->author_name, 'author_photo' => $obj->profile_photo_url ) );
+			}
+
+		} elseif ( $type == "yelp") {
+
+			$rows = $wpdb->get_results("select hash, rating, text, time, author_name, author_img from {$table_name}");
+
+			foreach ($rows as $obj) {
+				array_push( $reviews, array( 'hash' => $obj->hash, 'rating' => $obj->rating, 'text' => $obj->text, 'time' => $obj->time, 'author_name' => $obj->author_name, 'author_photo' => $obj->author_img ) );
+			}
+
+		} else {
+			// $rows = $wpdb->get_results("select hash, rating, text from {$table_name}");
+		}
+
+		foreach ($reviews as $review) {
+			
+			if ( !in_array( $review['hash'], $posted_reviews ) ) {
+
+					$new_post = array(
+				    	'post_title'	=> $review['author_name'],
+				    	'post_content'	=> $review['text'],
+				    	'post_status' 	=> 'publish',
+					    'post_type'   	=> 'online_reviews',
+					);
+
+					$post_id = wp_insert_post( $new_post );
+
+					add_post_meta( $post_id, 'type', $type );
+					add_post_meta( $post_id, 'hash', $review['hash'] );
+					add_post_meta( $post_id, 'rating', $review['rating'] );
+					add_post_meta( $post_id, 'time', $review['time'] );
+					add_post_meta( $post_id, 'author_photo', $review['author_photo'] );
+
+			}
+		}
+
+	}
+
+	/**
+	 * Function that takes care of adding new reviews as Online Reviews CPT
 	 * @since   1.0.0
 	 */
 	function add_new_reviews() {
 	 	
 	 	global $wpdb;
 
-	 	$new_post = array(
-	    	'post_title'  => 'test',
-	    	'post_status' => 'publish',
-		    'post_type'   => 'online_reviews',
-		);
+	 	$posted_reviews = $this->get_posted_reviews();
 
-		$post_id = wp_insert_post( $new_post );
+	 	$this->post_new_reviews( 'google', 'grp_google_review', $wpdb, $posted_reviews );
+	 	$this->post_new_reviews( 'yelp', 'yrw_yelp_review', $wpdb, $posted_reviews );
+	 	// $facebook_reviews =  $this->post_new_reviews( 'facebook', 'frw_facebook_review', $wpdb, $posted_reviews );
 
-		add_post_meta( $post_id, '_author', 'Alex' );
+	 	// $all_reviews = array_merge( $google_reviews, $yelp_reviews, $facebook_reviews );
+
+	 // 	$rows = $wpdb->get_results("select author_name from {$google_table}");
+		// foreach ($rows as $obj) {
+		// 	array_push($all_reviews, $obj->author_name);
+		// }
+
+		// $query = $wpdb->prepare(
+	 //        'SELECT ID FROM ' . $wpdb->posts . '
+	 //        WHERE post_title = %s
+	 //        AND post_type = \'stuff\'',
+	 //        $postTitle
+	 //    );
+	 //    $wpdb->query( $query );
+
+		// die(var_dump($existing_reviews));
 
 	}
 
