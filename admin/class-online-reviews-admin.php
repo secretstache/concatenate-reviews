@@ -211,10 +211,11 @@ class Online_Reviews_Admin {
 
 	}
 
-
 	/**
 	 * Get the list of hashes of already posted online_reviews.
-	 * @since   1.0.0
+	 *
+ 	 * @since   1.0.0
+	 * @uses 	get_posts()
 	 */
 	function get_posted_reviews() {
 
@@ -227,9 +228,16 @@ class Online_Reviews_Admin {
 			
 		return $posted_reviews;
 
-
 	}
 
+	/**
+	 * Function to get all of the reviews from database, loop through each of them and post it to WP if hash isn't in posted_reviews.
+	 *
+	 * @since   1.0.0
+ 	 * @uses 	get_results()
+ 	 * @uses 	wp_insert_post()
+	 * @uses 	add_post_meta()
+	 */
 	function post_new_reviews( $type, $table, $wpdb, $posted_reviews ) {
 
 		$table_name = $wpdb->prefix . $table;
@@ -276,14 +284,17 @@ class Online_Reviews_Admin {
 
 			}
 		}
-
+		
 	}
 
 	/**
-	 * Function that takes care of adding new reviews as Online Reviews CPT
+	 * Callback function for check_new_reviews custom CRON function.
+	 *
 	 * @since   1.0.0
+ 	 * @uses 	get_posted_reviews()
+	 * @uses 	post_new_reviews()
 	 */
-	function add_new_reviews() {
+	function check_new_reviews_cb() {
 	 	
 	 	global $wpdb;
 
@@ -291,25 +302,7 @@ class Online_Reviews_Admin {
 
 	 	$this->post_new_reviews( 'google', 'grp_google_review', $wpdb, $posted_reviews );
 	 	$this->post_new_reviews( 'yelp', 'yrw_yelp_review', $wpdb, $posted_reviews );
-	 	// $facebook_reviews =  $this->post_new_reviews( 'facebook', 'frw_facebook_review', $wpdb, $posted_reviews );
-
-	 	// $all_reviews = array_merge( $google_reviews, $yelp_reviews, $facebook_reviews );
-
-	 // 	$rows = $wpdb->get_results("select author_name from {$google_table}");
-		// foreach ($rows as $obj) {
-		// 	array_push($all_reviews, $obj->author_name);
-		// }
-
-		// $query = $wpdb->prepare(
-	 //        'SELECT ID FROM ' . $wpdb->posts . '
-	 //        WHERE post_title = %s
-	 //        AND post_type = \'stuff\'',
-	 //        $postTitle
-	 //    );
-	 //    $wpdb->query( $query );
-
-		// die(var_dump($existing_reviews));
-
+	 	// $this->post_new_reviews( 'facebook', 'frw_facebook_review', $wpdb, $posted_reviews );
 	}
 
 }
