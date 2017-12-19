@@ -5,11 +5,11 @@
  *
  * This file is used to markup the public-facing aspects of the plugin.
  *
- * @link       https://www.secretstache.com/
+ * @link       http://secretstache.com/
  * @since      1.0.0
  *
- * @package    Online_Reviews
- * @subpackage Online_Reviews/public/partials
+ * @package    Concatenate_Reviews
+ * @subpackage Concatenate_Reviews/public/partials
  */
 ?>
 

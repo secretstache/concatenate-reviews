@@ -6,11 +6,11 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://www.secretstache.com/
+ * @link       http://secretstache.com/
  * @since      1.0.0
  *
- * @package    Online_Reviews
- * @subpackage Online_Reviews/includes
+ * @package    Concatenate_Reviews
+ * @subpackage Concatenate_Reviews/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Online_Reviews
- * @subpackage Online_Reviews/includes
- * @author     Secret Stache Media, LLC <dev.postfactum@gmail.com>
+ * @package    Concatenate_Reviews
+ * @subpackage Concatenate_Reviews/includes
+ * @author     Secret Stache Media <dev.postfactum@gmail.com>
  */
-class Online_Reviews {
+class Concatenate_Reviews {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -35,7 +35,7 @@ class Online_Reviews {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Online_Reviews_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Concatenate_Reviews_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -72,7 +72,7 @@ class Online_Reviews {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'online-reviews';
+		$this->plugin_name = 'concatenate-reviews';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -86,10 +86,10 @@ class Online_Reviews {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Online_Reviews_Loader. Orchestrates the hooks of the plugin.
-	 * - Online_Reviews_i18n. Defines internationalization functionality.
-	 * - Online_Reviews_Admin. Defines all hooks for the admin area.
-	 * - Online_Reviews_Public. Defines all hooks for the public side of the site.
+	 * - Concatenate_Reviews_Loader. Orchestrates the hooks of the plugin.
+	 * - Concatenate_Reviews_i18n. Defines internationalization functionality.
+	 * - Concatenate_Reviews_Admin. Defines all hooks for the admin area.
+	 * - Concatenate_Reviews_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -103,33 +103,33 @@ class Online_Reviews {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-online-reviews-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-concatenate-reviews-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-online-reviews-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-concatenate-reviews-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-online-reviews-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-concatenate-reviews-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-online-reviews-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-concatenate-reviews-public.php';
 
-		$this->loader = new Online_Reviews_Loader();
+		$this->loader = new Concatenate_Reviews_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Online_Reviews_i18n class in order to set the domain and to register the hook
+	 * Uses the Concatenate_Reviews_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -137,7 +137,7 @@ class Online_Reviews {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Online_Reviews_i18n();
+		$plugin_i18n = new Concatenate_Reviews_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -152,7 +152,7 @@ class Online_Reviews {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Online_Reviews_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Concatenate_Reviews_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -163,7 +163,7 @@ class Online_Reviews {
 		// $this->loader->add_action( 'wp', $plugin_admin, 'setup_schedule' );
 		// $this->loader->add_action( 'check_new_reviews', $plugin_admin, 'check_new_reviews_cb', 20 );
 		
-		$this->loader->add_action( 'init', $plugin_admin, 'check_new_reviews_cb' );
+		// $this->loader->add_action( 'init', $plugin_admin, 'check_new_reviews_cb' );
 
 	}
 
@@ -176,7 +176,7 @@ class Online_Reviews {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Online_Reviews_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Concatenate_Reviews_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -207,7 +207,7 @@ class Online_Reviews {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Online_Reviews_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Concatenate_Reviews_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

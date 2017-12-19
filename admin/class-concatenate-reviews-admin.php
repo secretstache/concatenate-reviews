@@ -3,11 +3,11 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       https://www.secretstache.com/
+ * @link       http://secretstache.com/
  * @since      1.0.0
  *
- * @package    Online_Reviews
- * @subpackage Online_Reviews/admin
+ * @package    Concatenate_Reviews
+ * @subpackage Concatenate_Reviews/admin
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Online_Reviews
- * @subpackage Online_Reviews/admin
- * @author     Secret Stache Media, LLC <dev.postfactum@gmail.com>
+ * @package    Concatenate_Reviews
+ * @subpackage Concatenate_Reviews/admin
+ * @author     Secret Stache Media <dev.postfactum@gmail.com>
  */
-class Online_Reviews_Admin {
+class Concatenate_Reviews_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -65,15 +65,15 @@ class Online_Reviews_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Online_Reviews_Loader as all of the hooks are defined
+		 * defined in Concatenate_Reviews_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Online_Reviews_Loader will then create the relationship
+		 * The Concatenate_Reviews_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/online-reviews-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/concatenate-reviews-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -88,15 +88,15 @@ class Online_Reviews_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Online_Reviews_Loader as all of the hooks are defined
+		 * defined in Concatenate_Reviews_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Online_Reviews_Loader will then create the relationship
+		 * The Concatenate_Reviews_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/online-reviews-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/concatenate-reviews-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 

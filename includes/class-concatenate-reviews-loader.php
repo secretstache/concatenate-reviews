@@ -3,11 +3,11 @@
 /**
  * Register all actions and filters for the plugin
  *
- * @link       https://www.secretstache.com/
+ * @link       http://secretstache.com/
  * @since      1.0.0
  *
- * @package    Online_Reviews
- * @subpackage Online_Reviews/includes
+ * @package    Concatenate_Reviews
+ * @subpackage Concatenate_Reviews/includes
  */
 
 /**
@@ -17,11 +17,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Online_Reviews
- * @subpackage Online_Reviews/includes
- * @author     Secret Stache Media, LLC <dev.postfactum@gmail.com>
+ * @package    Concatenate_Reviews
+ * @subpackage Concatenate_Reviews/includes
+ * @author     Secret Stache Media <dev.postfactum@gmail.com>
  */
-class Online_Reviews_Loader {
+class Concatenate_Reviews_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.
