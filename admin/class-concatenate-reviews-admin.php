@@ -105,12 +105,12 @@ class Concatenate_Reviews_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function online_reviews_cpt() {
+	public function online_review_cpt() {
 
 		$cap_type 		= 'page';
 		$plural 		= 'Online Reviews';
 		$single 		= 'Online Review';
-		$cpt_name 		= 'online_reviews';
+		$cpt_name 		= 'ssm_online_review';
 		$text_domain 	= 'copi';
 
 		$opts = array(
@@ -178,7 +178,7 @@ class Concatenate_Reviews_Admin {
 			'with_front'					=> FALSE
 		);
 
-		$opts = apply_filters( 'online-review-cpt-options', $opts );
+		$opts = apply_filters( 'ssm-online-review-cpt-options', $opts );
 
 		register_post_type( strtolower( $cpt_name ), $opts );
 
@@ -212,14 +212,14 @@ class Concatenate_Reviews_Admin {
 	}
 
 	/**
-	 * Get the list of hashes of already posted online_reviews.
+	 * Get the list of hashes of already posted ssm_online_reviews.
 	 *
  	 * @since   1.0.0
 	 * @uses 	get_posts()
 	 */
 	function get_posted_reviews() {
 
-		$reviews = get_posts( array( 'numberposts' => -1, 'post_type' => 'online_reviews' ) );
+		$reviews = get_posts( array( 'numberposts' => -1, 'post_type' => 'ssm_online_review' ) );
 		$posted_reviews = array();
 
 		foreach ($reviews as $review) {
@@ -271,7 +271,7 @@ class Concatenate_Reviews_Admin {
 				    	'post_title'	=> $review['author_name'],
 				    	'post_content'	=> $review['text'],
 				    	'post_status' 	=> 'publish',
-					    'post_type'   	=> 'online_reviews',
+					    'post_type'   	=> 'ssm_online_review',
 					);
 
 					$post_id = wp_insert_post( $new_post );
