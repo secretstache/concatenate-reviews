@@ -260,6 +260,7 @@ class Concatenate_Reviews_Admin {
 			foreach ( $rows as $obj ) {
 				array_push( $reviews, array( 'hash' => $obj->hash, 'rating' => $obj->rating, 'text' => $obj->text, 'time' => $obj->time, 'author_name' => $obj->author_name, 'link' => $obj->url ) );
 			}
+			
 		}
 
 		foreach ($reviews as $review) {

@@ -159,12 +159,10 @@ class Concatenate_Reviews {
 
 		$this->loader->add_action( 'init', $plugin_admin, 'online_review_cpt' );
 
-		// $this->loader->add_filter( 'cron_schedules', $plugin_admin, 'cron_add_daily' );
-		// $this->loader->add_action( 'wp', $plugin_admin, 'setup_schedule' );
-		// $this->loader->add_action( 'check_new_reviews', $plugin_admin, 'check_new_reviews_cb', 20 );
+		$this->loader->add_filter( 'cron_schedules', $plugin_admin, 'cron_add_daily' );
+		$this->loader->add_action( 'wp', $plugin_admin, 'setup_schedule' );
+		$this->loader->add_action( 'check_new_reviews', $plugin_admin, 'check_new_reviews_cb', 20 );
 		
-		// $this->loader->add_action( 'init', $plugin_admin, 'check_new_reviews_cb' );
-
 	}
 
 	/**
