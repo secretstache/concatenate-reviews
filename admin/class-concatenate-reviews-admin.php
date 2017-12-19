@@ -223,7 +223,7 @@ class Concatenate_Reviews_Admin {
 		$posted_reviews = array();
 
 		foreach ($reviews as $review) {
-			array_push($posted_reviews, get_post_meta( $review->ID, 'hash', true ) );
+			array_push($posted_reviews, get_post_meta( $review->ID, '_hash', true ) );
 		}
 			
 		return $posted_reviews;
@@ -231,36 +231,35 @@ class Concatenate_Reviews_Admin {
 	}
 
 	/**
-	 * Function to get all of the reviews from database, loop through each of them and post it to WP if hash isn't in posted_reviews.
+	 * Function to get all of the reviews from database, loop through each of them and post it to WP if it's hash isn't in posted_reviews.
 	 *
 	 * @since   1.0.0
  	 * @uses 	get_results()
  	 * @uses 	wp_insert_post()
 	 * @uses 	add_post_meta()
 	 */
-	function post_new_reviews( $type, $table, $wpdb, $posted_reviews ) {
+	function post_new_reviews( $social_network, $table, $posted_reviews ) {
+
+	 	global $wpdb;
 
 		$table_name = $wpdb->prefix . $table;
 		$reviews = array();
 
-		if ( $type == "google" ) {
+		if ( $social_network == "google" ) {
 
-			$rows = $wpdb->get_results("select hash, rating, text, time, author_name, profile_photo_url from {$table_name}");
+			$rows = $wpdb->get_results("select hash, rating, text, time, author_name, author_url from {$table_name}");
 
-			foreach ($rows as $obj) {
-				array_push( $reviews, array( 'hash' => $obj->hash, 'rating' => $obj->rating, 'text' => $obj->text, 'time' => $obj->time, 'author_name' => $obj->author_name, 'author_photo' => $obj->profile_photo_url ) );
-			}
-
-		} elseif ( $type == "yelp") {
-
-			$rows = $wpdb->get_results("select hash, rating, text, time, author_name, author_img from {$table_name}");
-
-			foreach ($rows as $obj) {
-				array_push( $reviews, array( 'hash' => $obj->hash, 'rating' => $obj->rating, 'text' => $obj->text, 'time' => $obj->time, 'author_name' => $obj->author_name, 'author_photo' => $obj->author_img ) );
+			foreach ( $rows as $obj ) {
+				array_push( $reviews, array( 'hash' => $obj->hash, 'rating' => $obj->rating, 'text' => $obj->text, 'time' => $obj->time, 'author_name' => $obj->author_name, 'link' => $obj->author_url ) );
 			}
 
 		} else {
-			// $rows = $wpdb->get_results("select hash, rating, text from {$table_name}");
+
+			$rows = $wpdb->get_results("select hash, rating, text, time, author_name, url from {$table_name}");
+
+			foreach ( $rows as $obj ) {
+				array_push( $reviews, array( 'hash' => $obj->hash, 'rating' => $obj->rating, 'text' => $obj->text, 'time' => $obj->time, 'author_name' => $obj->author_name, 'link' => $obj->url ) );
+			}
 		}
 
 		foreach ($reviews as $review) {
@@ -276,11 +275,11 @@ class Concatenate_Reviews_Admin {
 
 					$post_id = wp_insert_post( $new_post );
 
-					add_post_meta( $post_id, 'type', $type );
-					add_post_meta( $post_id, 'hash', $review['hash'] );
-					add_post_meta( $post_id, 'rating', $review['rating'] );
-					add_post_meta( $post_id, 'time', $review['time'] );
-					add_post_meta( $post_id, 'author_photo', $review['author_photo'] );
+					add_post_meta( $post_id, '_social_network', $social_network );
+					add_post_meta( $post_id, '_rating', $review['rating'] );
+					add_post_meta( $post_id, '_time', $review['time'] );
+					add_post_meta( $post_id, '_link', $review['link'] );
+					add_post_meta( $post_id, '_hash', $review['hash'] );
 
 			}
 		}
@@ -296,13 +295,10 @@ class Concatenate_Reviews_Admin {
 	 */
 	function check_new_reviews_cb() {
 	 	
-	 	global $wpdb;
-
 	 	$posted_reviews = $this->get_posted_reviews();
 
-	 	$this->post_new_reviews( 'google', 'grp_google_review', $wpdb, $posted_reviews );
-	 	$this->post_new_reviews( 'yelp', 'yrw_yelp_review', $wpdb, $posted_reviews );
-	 	// $this->post_new_reviews( 'facebook', 'frw_facebook_review', $wpdb, $posted_reviews );
+	 	$this->post_new_reviews( 'google', 'grp_google_review', $posted_reviews );
+	 	$this->post_new_reviews( 'yelp', 'yrw_yelp_review', $posted_reviews );
 	}
 
 }
