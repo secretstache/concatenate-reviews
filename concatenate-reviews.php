@@ -15,13 +15,13 @@
  * @wordpress-plugin
  * Plugin Name:       Concatenate Reviews
  * Plugin URI:        http://secretstache.com/
- * Description:       Custom WordpPress plugin to concatenate the reviews from Google and Yelp
+ * Description:       A simple plugin that concatenates Google Reviews Pro & Yelp Revies Pro by RichPlugins
  * Version:           1.0.0
  * Author:            Secret Stache Media
  * Author URI:        http://secretstache.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       concatenate-reviews
+ * Text Domain:       cr
  * Domain Path:       /languages
  */
 

@@ -111,7 +111,8 @@ class Concatenate_Reviews_Admin {
 		$plural 		= 'Online Reviews';
 		$single 		= 'Online Review';
 		$cpt_name 		= 'ssm_online_review';
-		$text_domain 	= 'copi';
+		$slug			= 'online-review';
+		$text_domain 	= 'cr';
 
 		$opts = array(
 			'can_export' 					=> TRUE,
@@ -174,7 +175,7 @@ class Concatenate_Reviews_Admin {
 			'ep_mask'						=> EP_PERMALINK,
 			'feeds'							=> FALSE,
 			'pages'							=> TRUE,
-			'slug'							=> esc_html__( strtolower( $plural ), $text_domain ),
+			'slug'							=> esc_html__( strtolower( $slug ), $text_domain ),
 			'with_front'					=> FALSE
 		);
 
