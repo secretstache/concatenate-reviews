@@ -251,7 +251,7 @@ class Concatenate_Reviews_Admin {
 			$rows = $wpdb->get_results("select hash, rating, text, time, author_name, author_url from {$table_name}");
 
 			foreach ( $rows as $obj ) {
-				array_push( $reviews, array( 'hash' => $obj->hash, 'rating' => $obj->rating, 'text' => $obj->text, 'time' => $obj->time, 'author_name' => $obj->author_name, 'link' => $obj->author_url ) );
+				array_push( $reviews, array( 'hash' => $obj->hash, 'rating' => $obj->rating, 'text' => $obj->text, 'time' => strtotime( $obj->time ), 'author_name' => $obj->author_name, 'link' => $obj->author_url ) );
 			}
 
 		} else {
@@ -259,7 +259,7 @@ class Concatenate_Reviews_Admin {
 			$rows = $wpdb->get_results("select hash, rating, text, time, author_name, url from {$table_name}");
 
 			foreach ( $rows as $obj ) {
-				array_push( $reviews, array( 'hash' => $obj->hash, 'rating' => $obj->rating, 'text' => $obj->text, 'time' => $obj->time, 'author_name' => $obj->author_name, 'link' => $obj->url ) );
+				array_push( $reviews, array( 'hash' => $obj->hash, 'rating' => $obj->rating, 'text' => $obj->text, 'time' => strtotime( $obj->time ), 'author_name' => $obj->author_name, 'link' => $obj->url ) );
 			}
 			
 		}
