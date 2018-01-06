@@ -297,10 +297,10 @@ class Concatenate_Reviews_Admin {
 	 */
 	function check_new_reviews_cb() {
 	 	
-	 	$posted_reviews = $this->get_posted_reviews();
+	 	$posted_reviews = Concatenate_Reviews_Admin::get_posted_reviews();
 
-	 	$this->post_new_reviews( 'google', 'grp_google_review', $posted_reviews );
-	 	$this->post_new_reviews( 'yelp', 'yrw_yelp_review', $posted_reviews );
+	 	Concatenate_Reviews_Admin::post_new_reviews( 'google', 'grp_google_review', $posted_reviews );
+	 	Concatenate_Reviews_Admin::post_new_reviews( 'yelp', 'yrw_yelp_review', $posted_reviews );
 	}
 
 }

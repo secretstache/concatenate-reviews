@@ -43,7 +43,10 @@ define( 'PLUGIN_NAME_VERSION', '1.0.0' );
  */
 function activate_concatenate_reviews() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-concatenate-reviews-activator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'admin/class-concatenate-reviews-admin.php';
+	
 	Concatenate_Reviews_Activator::activate();
+	Concatenate_Reviews_Admin::check_new_reviews_cb();
 }
 
 /**
